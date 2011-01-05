@@ -17,7 +17,7 @@ object Main{
         println("+------------------------------+")
         for (i <- 1 to 12) {
             print("|..............................|")
-            println(String.format("% 2d", i))
+            println(format("%2d", i))
         }
         println("+------------------------------+")
     }
