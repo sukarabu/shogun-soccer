@@ -23,9 +23,9 @@ object Game extends Actor{
     }
   }
 
-  private def notifyAll():Unit = {
+  private def notifyAllPlayer():Unit = {
     for (player <- players){
-      player ! WriteBuffer(currentPosition.getBytes)
+      player ! WriteBuffer(currentPosition.getBytes,EchoActor.selector)
     }
   }
 

@@ -12,7 +12,7 @@ package models {
     val socket = soc
     var buffOut:ByteArrayOutputStream = new ByteArrayOutputStream()
     var id:Int = 0
-    var field:Field
+    var field:Field = new Field
   
     def act() = {
       loop{
@@ -20,7 +20,7 @@ package models {
           case WriteBuffer(bytes,selector) => {
             println("WriteBuffer")
             //TODO selectorの取得方法
-            buffOut.write(bytes,EchoActor.selector)
+            buffOut.write(bytes)
             socket.register(selector,SelectionKey.OP_WRITE)
           }
           case WriteSocket(selector) => {
