@@ -43,14 +43,14 @@ object EchoActor extends Actor {
 
           println( "EchoServer is running on port=%d".format( port ) )
           EchoActor ! Select
+          Game.start()
         }
         case Select => {
           selector.select
           selector.selectedKeys.foreach{ key =>
             if( key.isAcceptable ){
               EchoActor ! Accept( key )
-            }
-            else if( key.isReadable ){
+            } else if( key.isReadable ){
               EchoActor ! Read( key )
             } else if( key.isWritable ){
               EchoActor ! Write( key )
@@ -72,6 +72,7 @@ object EchoActor extends Actor {
               player.start
               playerList += player
               playerMap.put(channel,player)
+              Game ! Join(player)
             }
           }
         }

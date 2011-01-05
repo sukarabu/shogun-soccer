@@ -48,20 +48,28 @@ object Game extends Actor{
         }
         case Command(bytes) => {
           val str:String = new String(bytes);
-          str match{
+          str.trim match{
             case "h" => {
               //left
+              println("left")
             }
             case "l" => {
               //right
+              println("right")
             }
             case "k" => {
               //up
+              println("up")
             }
             case "j" => {
               //down
+              println("down")
+            }
+            case _ => {
+              println(str)
             }
           }
+          notifyAllPlayer
         }
       }
     }
