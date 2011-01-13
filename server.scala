@@ -1,3 +1,5 @@
+package com.sukarabu.sgsoccer
+
 import scala.actors.Actor
 import scala.actors.Actor._
 import scala.collection.JavaConversions._
@@ -9,7 +11,7 @@ import java.net._
 import java.nio.charset._
 import java.nio.channels.{ SelectionKey,Selector, ServerSocketChannel, SocketChannel }
 
-import models._
+import com.sukarabu.sgsoccer.models._
 
 object EchoServerNIO{
 
@@ -94,10 +96,7 @@ object EchoActor extends Actor {
               buf.flip
               val bytes = new Array[Byte](buf.limit)
               buf.get(bytes,0,bytes.length)
-              Game ! Command(bytes)
-              //for(player <- playerList){
-              //  player ! WriteBuffer(bytes,selector)
-              //}
+              Game ! Command(playerMap(channel),bytes)
             }
           }
         }
