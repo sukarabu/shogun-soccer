@@ -9,7 +9,7 @@ import java.nio.channels.{ SelectionKey,Selector, ServerSocketChannel, SocketCha
   case class WriteBuffer(bytes:Array[Byte],selector:Selector)
   case class WriteSocket(selector:Selector)
   
-  class Player(soc:SocketChannel) extends Actor{
+  class Player(soc:SocketChannel = null) extends Actor{
     val socket = soc
     var buffOut:ByteArrayOutputStream = new ByteArrayOutputStream()
     var id:Int = 0
