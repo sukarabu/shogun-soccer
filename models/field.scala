@@ -6,7 +6,7 @@ class Field(x:Int,y:Int){
   var player:Player = null
 
   def toStr():String = {
-    if(player == null) "." else player.toStr
+    if(player == null) "_" else player.toStr
   }
 
   def position():Int = {

@@ -18,8 +18,8 @@ object Game extends Actor{
 
   private def move(player:Player,dx:Int,dy:Int):Unit = {
     val field = player.field
-    val newFieldIndex:Int = field.position + (11 * dy) + dx
-    if(newFieldIndex > 0 && newFieldIndex < 144){
+    val newFieldIndex:Int = field.position + (12 * dy) + dx
+    if(newFieldIndex >= 0 && newFieldIndex < 144){
       val newField = fields(newFieldIndex)
       field.player = null
       newField.player = player
@@ -37,7 +37,7 @@ object Game extends Actor{
     var buff:String = ""
     for (i <- 0 to 143){
       buff += fields(i).toStr
-      if(i != 0 && i % 11 == 0) buff += "\n"
+      if(i != 0 && (i+1) % 12 == 0) buff += "\n"
     }
     return buff
   }

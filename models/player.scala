@@ -40,7 +40,7 @@ import java.nio.channels.{ SelectionKey,Selector, ServerSocketChannel, SocketCha
       }
     }
 
-    def toStr():String = { "@" }
+    def toStr():String = { "a" }
   
     def loggedIn():Boolean = {
       return true
