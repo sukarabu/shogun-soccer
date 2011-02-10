@@ -27,7 +27,6 @@ object Game extends Actor{
     val field = player.field
     val newFieldIndex:Int = field.position + (12 * dy) + dx
     if(newFieldIndex >= 0 && newFieldIndex < 144){
-      println("newIndex:"+newFieldIndex)
       val newField = fields(newFieldIndex)
       field.player = null
       newField.player = player
@@ -37,7 +36,6 @@ object Game extends Actor{
 
   private def notifyAllPlayer():Unit = {
     for (player <- players){
-      println(currentPosition)
       EchoActor ! WriteToBuffer(player.id,currentPosition.getBytes)
     }
   }
@@ -72,7 +70,6 @@ object Game extends Actor{
         case Command(channel,bytes) => {
           val player = channelToPlayer(channel)
           val str:String = new String(bytes);
-          println("command:"+str+",player:"+player.id)
           str.trim match{
             case "h" => { //left
               move(player,-1,0)
@@ -87,7 +84,7 @@ object Game extends Actor{
               move(player,0,1)
             }
             case _ => {
-              println(str)
+              println("no commands matched:"+str)
             }
           }
           notifyAllPlayer

@@ -104,7 +104,6 @@ object EchoActor extends Actor {
             val bbuf = ByteBuffer.wrap(out.toByteArray)
             channel.write(bbuf)
             if(bbuf.hasRemaining()){
-              println("hasRemaining")
               val rest = new ByteArrayOutputStream();
               rest.write(bbuf.array,bbuf.position,bbuf.remaining)
               out = rest //TODO updateBufferみたいなのをSocketBufferMapにつくる
@@ -118,7 +117,6 @@ object EchoActor extends Actor {
         }
         case WriteToBuffer( playerId,bytes ) => {
           socketBufferMap.writeBuffer(playerId,bytes)
-          println("playerid:"+playerId+","+new String(bytes))
           val socket:SocketChannel = socketBufferMap.getSocketById(playerId)
           socket.register(selector,SelectionKey.OP_WRITE)
         }
