@@ -26,14 +26,13 @@ case class Start( port:Int )
 case class Accept( key:SelectionKey )
 case class Read( key:SelectionKey )
 case class Write( key:SelectionKey )
+case class WriteToBuffer( id:String,bytes:Array[Byte])
 
 object EchoActor extends Actor {
   val BUF_SIZE = 1024
   lazy val selector = Selector.open
   lazy val serverChannel = ServerSocketChannel.open
-  val buffs = new ArrayBuffer[ByteBuffer]()
-  val playerList = ListBuffer[Player]()
-  val playerMap = collection.mutable.Map[SocketChannel, Player]()
+  val socketBufferMap:SocketBufferMap = new SocketBufferMap()
 
   def act() = {
     loop {
@@ -70,11 +69,9 @@ object EchoActor extends Actor {
 
               channel.configureBlocking(false)
               channel.register(selector, SelectionKey.OP_READ);
-              val player = new Player(channel)
-              player.start
-              playerList += player
-              playerMap.put(channel,player)
-              Game ! Join(player)
+              val id:String = Game.getPlayerId(remoteAddress)
+              socketBufferMap.add(id,channel)
+              Game ! Join(id,channel)
             }
           }
         }
@@ -96,16 +93,34 @@ object EchoActor extends Actor {
               buf.flip
               val bytes = new Array[Byte](buf.limit)
               buf.get(bytes,0,bytes.length)
-              Game ! Command(playerMap(channel),bytes)
+              Game ! Command(channel,bytes)
             }
           }
         }
         case Write( key ) => {
           val channel = key.channel.asInstanceOf[SocketChannel]
-          if(playerMap.contains(channel)){
-            val player = playerMap(channel)
-            player ! WriteSocket(selector)
+          var out:ByteArrayOutputStream = socketBufferMap.getBufferBySocket(channel)
+          if(out != null){//Optionとか使いたい
+            val bbuf = ByteBuffer.wrap(out.toByteArray)
+            channel.write(bbuf)
+            if(bbuf.hasRemaining()){
+              println("hasRemaining")
+              val rest = new ByteArrayOutputStream();
+              rest.write(bbuf.array,bbuf.position,bbuf.remaining)
+              out = rest //TODO updateBufferみたいなのをSocketBufferMapにつくる
+              channel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE)
+            } else {
+              out = new ByteArrayOutputStream()
+              socketBufferMap.clearBufferBySocket(channel)
+              channel.register(selector, SelectionKey.OP_READ)
+            }
           }
+        }
+        case WriteToBuffer( playerId,bytes ) => {
+          socketBufferMap.writeBuffer(playerId,bytes)
+          println("playerid:"+playerId+","+new String(bytes))
+          val socket:SocketChannel = socketBufferMap.getSocketById(playerId)
+          socket.register(selector,SelectionKey.OP_WRITE)
         }
       }
     }
