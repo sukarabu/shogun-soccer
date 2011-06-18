@@ -14,10 +14,12 @@ import java.nio.channels.{ SelectionKey,Selector, ServerSocketChannel, SocketCha
 import com.sukarabu.sgsoccer.models._
 
 object EchoServerNIO{
+  val default_port = 9998
 
   def main( args:Array[String] ){
     EchoActor.start()
-    EchoActor ! Start( args.head.toInt )
+    val port = if(args.length > 0) args.head.toInt else default_port
+    EchoActor ! Start( port )
   }
 }
 
