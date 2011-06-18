@@ -1,9 +1,0 @@
-#Source Dependencies
-#Sat Jun 18 13:52:48 JST 2011
-src/main/scala/models/player.scala=src/main/scala/models/field.scala\:src/main/scala/models/game.scala
-src/main/scala/server.scala=src/main/scala/models/game.scala
-src/main/scala/models/game.scala=src/main/scala/server.scala
-src/main/scala/Disp.scala=
-src/main/scala/models/field.scala=src/main/scala/models/player.scala\:src/main/scala/models/game.scala
-src/main/scala/client.scala=
-src/main/scala/models/SocketBufferMap.scala=src/main/scala/server.scala

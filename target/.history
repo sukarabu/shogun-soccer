@@ -1,6 +1,0 @@
-run
-++2.8.1
-set build.scala.versions 2.8.1
-reload
-current
-compile

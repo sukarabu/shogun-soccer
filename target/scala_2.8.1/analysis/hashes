@@ -1,9 +1,0 @@
-#Source Hashes
-#Sat Jun 18 13:52:48 JST 2011
-src/main/scala/models/player.scala=07b3bc4f6f4d0060c21c6643ffeb80ddb2f6135e
-src/main/scala/server.scala=b125de6df40e3bc12e033c89f28914a1cc4e8bd2
-src/main/scala/models/game.scala=e5504ad6a2579bbd15033153b21440b3e88522fc
-src/main/scala/models/field.scala=22255a324c096817913494a15c6a846bb323c160
-src/main/scala/Disp.scala=ab742ea27df9e6068efd347c70afda04fe1036dd
-src/main/scala/client.scala=6f94d343eaa39472047c2f7c0c0d0a14e9db200b
-src/main/scala/models/SocketBufferMap.scala=31e349fbd2b52faa600236810c8acff507ec85cc
