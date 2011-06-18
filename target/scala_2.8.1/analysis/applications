@@ -1,0 +1,5 @@
+#Classes with main methods
+#Sat Jun 18 13:52:48 JST 2011
+src/main/scala/server.scala=com.sukarabu.sgsoccer.EchoServerNIO
+src/main/scala/Disp.scala=com.sukarabu.sgsoccer.Main
+src/main/scala/client.scala=com.sukarabu.sgsoccer.Client
